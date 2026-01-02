@@ -9,7 +9,7 @@ const projects = {
         {
             title: "Digit Insurance",
             company: "Go Digit General Insurance",
-            logo: "/digit-insurance-icon.png", 
+            logo: `${import.meta.env.BASE_URL}digit-insurance-icon.png`, 
             color: "bg-black",
             storeLinks: { 
                 ios: "https://apps.apple.com/in/app/digit-insurance/id1453841964", 
@@ -28,7 +28,7 @@ const projects = {
         {
             title: "Digit Workshop App",
             company: "Go Digit General Insurance",
-            logo: "/digit-workshop.png",
+            logo: `${import.meta.env.BASE_URL}digit-workshop.png`,
             color: "bg-black",
             storeLinks: {
                 ios: "https://apps.apple.com/in/app/digit-insurance/id1453841964",
@@ -47,7 +47,7 @@ const projects = {
         {
             title: "Digit Partner App",
             company: "Go Digit General Insurance",
-            logo: "/digit-partner.png",
+            logo: `${import.meta.env.BASE_URL}digit-partner.png`,
             color: "bg-black",
             storeLinks: { 
                 ios: "https://apps.apple.com/in/app/digit-partner/id1629409793", 
@@ -66,7 +66,7 @@ const projects = {
         {
             title: "LTIMindtree",
             company: "LTIMindtree Ltd.",
-            logo: "/ltimindtree.png",
+            logo: `${import.meta.env.BASE_URL}ltimindtree.png`,
             color: "bg-black",
             storeLinks: { ios: "#", android: "#" },
             desc: "Delivered enterprise-scale digital solutions for global clients.",
