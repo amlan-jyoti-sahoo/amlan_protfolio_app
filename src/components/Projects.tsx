@@ -333,7 +333,7 @@ const Projects = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-24"
+                    className="text-center mb-12"
                 >
                     <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
                         Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-green">Showcase</span>
@@ -345,10 +345,18 @@ const Projects = () => {
 
                 {/* Company Projects Section - Expandable Cards */}
                 <div className="mb-32">
-                    <h3 className="text-2xl font-bold mb-12 flex items-center gap-4 text-white/90">
+                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-4 text-white/90">
                         <span className="w-12 h-px bg-neon-blue"></span>
                         Professional Experience
                     </h3>
+                    
+                    <div className="text-xs text-gray-500 mb-8 italic max-w-3xl border-l-2 border-neon-blue/30 pl-4 py-1">
+                        <span className="font-bold not-italic text-neon-blue">Note:</span>
+                        <ul className="list-disc pl-4 space-y-1 mt-1">
+                            <li>The projects showcased below utilize only publicly available information, assets, and general descriptions of my role.</li>
+                            <li>No sensitive, proprietary, or confidential company data has been included or exposed.</li>
+                        </ul>
+                    </div>
                     <div className="flex flex-col lg:flex-row gap-4 w-full">
                         {projects.company.map((project, index) => (
                             <CompanyCard 
