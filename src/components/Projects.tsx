@@ -235,17 +235,23 @@ const CompanyCard = ({
                             minWidth: 0,
                             transition: { duration: 0.2, delay: 0 } 
                         }}
-                        className="flex-1 p-6 border-l border-white/10 flex flex-col justify-center h-full overflow-hidden whitespace-normal"
+                        className="flex-1 p-6 border-l border-white/10 flex flex-col justify-center gap-6 h-full overflow-hidden whitespace-normal"
                     >
-                        <h4 className="text-lg font-bold text-neon-blue mb-4">About the Role</h4>
-                        <p className="text-gray-300 text-sm text-left leading-relaxed line-clamp-4">
-                            {project.desc || "Key contributions and development work for this enterprise application."}
-                        </p>
-                        
-                        {/* Fake "View Details" CTA - now triggers the modal via parent click */}
-                        <div className="mt-8 flex items-center text-sm font-bold text-neon-purple group-hover:translate-x-2 transition-transform cursor-pointer">
-                            View Details <ExternalLink size={14} className="ml-2" />
+                        <div className="space-y-4">
+                            <h4 className="text-lg font-bold text-neon-blue">About the Role</h4>
+                            <p className="text-gray-300 text-sm text-left leading-relaxed">
+                                {project.desc || "Key contributions and development work for this enterprise application."}
+                            </p>
                         </div>
+                        
+                        {/* CTA Button */}
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold flex items-center justify-center gap-2 shadow-lg shadow-neon-blue/20 hover:shadow-neon-blue/40 transition-shadow"
+                        >
+                            Explore Project <ExternalLink size={16} />
+                        </motion.button>
                     </motion.div>
                 )}
             </AnimatePresence>
