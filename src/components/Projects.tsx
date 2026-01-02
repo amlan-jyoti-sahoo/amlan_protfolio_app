@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, Cloud, Globe } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 const projects = {
@@ -13,7 +14,20 @@ const projects = {
                 ios: "https://apps.apple.com/in/app/digit-insurance/id1453841964", 
                 android: "https://play.google.com/store/apps/details?id=com.godigit.digit&hl=en_IN" 
             },
-            highlights: ["KYC", "OCR", "Payment Gateway", "TS Migration", "Super App", "Life Insurance Module"]
+            highlights: ["KYC", "OCR", "Payment Gateway", "TS Migration", "Super App", "Life Insurance Module"],
+            desc: "Spearheaded the development of core insurance modules including Life Insurance from scratch. Led the TypeScript migration and integrated critical features like KYC, OCR, and Payment Gateways into the Super App ecosystem."
+        },
+        {
+            title: "Digit Workshop App",
+            company: "Go Digit General Insurance",
+            logo: "/digit-workshop.png",
+            color: "bg-black",
+            storeLinks: {
+                ios: "https://apps.apple.com/in/app/digit-insurance/id1453841964",
+                android: "https://play.google.com/store/apps/details?id=com.godigit.digitworkshop&hl=en_IN"
+            },
+            desc: "Streamlined workshop operations for faster claim processing and vehicle service management.",
+            highlights: ["Native Java project", "project upgrade migration", "Sdk 35 migration", "16 kb memory page size optimization",]
         },
         {
             title: "Digit Partner App",
@@ -23,24 +37,23 @@ const projects = {
             storeLinks: { 
                 ios: "https://apps.apple.com/in/app/digit-partner/id1629409793", 
                 android: "https://play.google.com/store/apps/details?id=com.godigit.posp&hl=en_IN" 
-            }
+            },
+            desc: "Empowering partners with a dedicated mobile solution for managing policies and claims.",
+            highlights: ["Webview addition", "Camera App optimization"]
         },
-        {
-            title: "Digit Workshop App",
-            company: "Go Digit General Insurance",
-            logo: "/digit-workshop.png",
-            color: "bg-black",
-            storeLinks: { 
-                ios: "https://apps.apple.com/in/app/digit-insurance/id1453841964", 
-                android: "https://play.google.com/store/apps/details?id=com.godigit.digitworkshop&hl=en_IN" 
-            }
-        },
+        
         {
             title: "LTIMindtree",
             company: "LTIMindtree Ltd.",
             logo: "/ltimindtree.png",
             color: "bg-black",
-            storeLinks: { ios: "#", android: "#" }
+            storeLinks: { ios: "#", android: "#" },
+            desc: "Delivered enterprise-scale digital solutions for global clients.",
+            highlights: ["Amazon Web Services", "Cloud Technology"],
+            customIcons: [
+                { type: "web", url: "https://www.ltimindtree.com/", title: "Web Solutions" },
+                { type: "cloud", url: "https://www.ltimindtree.com/", title: "Cloud Services" }
+            ]
         }
     ],
     personal: [
@@ -68,71 +81,134 @@ const projects = {
     ]
 };
 
-const CompanyCard = ({ project, index }: { project: any, index: number }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: index * 0.1 }}
-        whileHover={{ y: -5 }}
-        className="glass-panel p-6 rounded-2xl flex flex-col items-center text-center group border-transparent hover:border-neon-blue/30 transition-all duration-300 relative overflow-hidden"
-    >
-    <div className={`absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
-        
-        <div className={`w-16 h-16 ${project.color} rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg group-hover:shadow-neon transition-all overflow-hidden relative`}>
-            {project.logo.startsWith('http') || project.logo.startsWith('/') ? (
-                <>
-                    <img 
-                        src={project.logo} 
-                        alt={project.title} 
-                        className="w-full h-full object-contain p-2"
-                        onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                        }} 
-                    />
-                    <div className="hidden absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-800 font-bold">
-                        {project.title.substring(0, 2).toUpperCase()}
-                    </div>
-                </>
-            ) : (
-                project.logo
-            )}
-        </div>
-        
-        <h3 className="text-xl font-bold mb-1">{project.title}</h3>
-        <p className="text-gray-400 text-sm mb-4">{project.company}</p>
+const CompanyCard = ({ 
+    project, 
+    index, 
+    isHovered, 
+    onHover, 
+    onLeave,
+    isAnyHovered 
+}: { 
+    project: any, 
+    index: number, 
+    isHovered: boolean, 
+    onHover: () => void, 
+    onLeave: () => void,
+    isAnyHovered: boolean 
+}) => {
+    return (
+        <motion.div
+            layout
+            onHoverStart={onHover}
+            onHoverEnd={onLeave}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ layout: { duration: 0.4, type: "spring", bounce: 0.2 } }}
+            className={`
+                relative rounded-2xl overflow-hidden glass-panel border-transparent hover:border-neon-blue/30 transition-colors duration-300
+                flex flex-col lg:flex-row items-center cursor-pointer group
+                ${isHovered ? 'lg:flex-[2]' : 'lg:flex-1'}
+                h-[480px] lg:h-[380px]
+            `}
+        >
+            <div className={`absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
 
-        {/* Project Highlights / Tags */}
-        {project.highlights && (
-            <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-[280px]">
-                {project.highlights.map((tag: string, i: number) => (
-                    <span 
-                        key={i} 
-                        className="px-2 py-1 text-[10px] uppercase tracking-wider font-semibold rounded-md bg-white/5 text-gray-400 border border-white/5 hover:text-white hover:border-white/20 transition-colors cursor-default"
+            {/* Default State: Icon & Title (Always visible, shifts layout) */}
+            <motion.div layout className="flex flex-col items-center justify-between py-8 px-6 w-full h-full z-10 gap-2">
+                <div className="flex flex-col items-center gap-4">
+                    <div className={`w-20 h-20 ${project.color} rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg group-hover:shadow-neon transition-all overflow-hidden relative flex-shrink-0`}>
+                        {project.logo.startsWith('http') || project.logo.startsWith('/') ? (
+                            <div className="w-full h-full p-2 bg-black flex items-center justify-center">
+                                <img 
+                                    src={project.logo} 
+                                    alt={project.title} 
+                                    className="w-full h-full object-contain"
+                                    onError={(e) => {
+                                        e.currentTarget.style.display = 'none';
+                                        e.currentTarget.parentElement?.nextElementSibling?.classList.remove('hidden');
+                                    }} 
+                                />
+                                <div className="hidden absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-800 font-bold">
+                                    {project.title.substring(0, 2).toUpperCase()}
+                                </div>
+                            </div>
+                        ) : (
+                            project.logo
+                        )}
+                    </div>
+                    
+                    <div className="text-center">
+                        <motion.h3 layout="position" className="text-xl font-bold mb-1 whitespace-nowrap">{project.title}</motion.h3>
+                        <motion.p layout="position" className="text-gray-400 text-sm">{project.company}</motion.p>
+                    </div>
+                </div>
+                
+                {/* Highlights / Tags (Visible in default view) */}
+                {project.highlights && (
+                    <motion.div layout className="flex flex-wrap justify-center gap-2 max-w-[240px] my-2">
+                        {project.highlights.map((tag: string, i: number) => (
+                            <span 
+                                key={i} 
+                                className="px-2 py-1 text-[9px] uppercase tracking-wider font-semibold rounded bg-white/5 text-gray-400 border border-white/5"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </motion.div>
+                )}
+
+                {/* Store Links / Custom Icons (Always visible) */}
+                <div className="flex gap-4 opacity-60 group-hover:opacity-100 transition-opacity">
+                    {project.customIcons ? (
+                         project.customIcons.map((icon: any, i: number) => (
+                            <a key={i} href={icon.url} target="_blank" rel="noopener noreferrer" className={`transition-colors ${icon.type === 'web' ? 'hover:text-neon-blue' : 'hover:text-neon-green'}`} title={icon.title}>
+                                {icon.type === 'web' && <Globe className="w-6 h-6" />}
+                                {icon.type === 'cloud' && <Cloud className="w-6 h-6" />}
+                            </a>
+                        ))
+                    ) : (
+                        <>
+                            <a href={project.storeLinks.ios != "#" ? project.storeLinks.ios : undefined} target="_blank" rel="noopener noreferrer" className={`hover:text-neon-blue transition-colors ${project.storeLinks.ios == "#" ? "pointer-events-none opacity-50" : ""}`} title="App Store">
+                                <svg viewBox="0 0 384 512" fill="currentColor" className="w-6 h-6">
+                                    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 49.7-25.2 69.2 26.2 2 55.4-15.6 69.1-31.6z"/>
+                                </svg>
+                            </a>
+                            <a href={project.storeLinks.android != "#" ? project.storeLinks.android : undefined} target="_blank" rel="noopener noreferrer" className={`hover:text-neon-green transition-colors ${project.storeLinks.android == "#" ? "pointer-events-none opacity-50" : ""}`} title="Play Store">
+                                <svg viewBox="0 0 512 512" fill="currentColor" className="w-6 h-6">
+                                    <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                                </svg>
+                            </a>
+                        </>
+                    )}
+                </div>
+            </motion.div>
+
+            {/* Expanded Content: Description Only */}
+            <AnimatePresence>
+                {isHovered && (
+                    <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        transition={{ duration: 0.3, delay: 0.1 }}
+                        className="flex-1 p-6 border-l border-white/10 flex flex-col justify-center h-full min-w-[300px] overflow-hidden"
                     >
-                        {tag}
-                    </span>
-                ))}
-            </div>
-        )}
-        
-        <div className="flex gap-4 mt-auto opacity-60 group-hover:opacity-100 transition-opacity">
-            <a href={project.storeLinks.ios} target="_blank" rel="noopener noreferrer" className="hover:text-neon-blue transition-colors" title="App Store">
-                 {/* Apple Logo SVG */}
-                <svg viewBox="0 0 384 512" fill="currentColor" className="w-6 h-6">
-                    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 49.7-25.2 69.2 26.2 2 55.4-15.6 69.1-31.6z"/>
-                </svg>
-            </a>
-            <a href={project.storeLinks.android} target="_blank" rel="noopener noreferrer" className="hover:text-neon-green transition-colors" title="Play Store">
-                 {/* Google Play Logo SVG */}
-                <svg viewBox="0 0 512 512" fill="currentColor" className="w-6 h-6">
-                    <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
-                </svg>
-            </a>
-        </div>
-    </motion.div>
-);
+                        <h4 className="text-lg font-bold text-neon-blue mb-4">About the Role</h4>
+                        <p className="text-gray-300 text-sm text-left leading-relaxed">
+                            {project.desc || "Key contributions and development work for this enterprise application."}
+                        </p>
+                        
+                        {/* Fake "View Details" CTA */}
+                        <div className="mt-8 flex items-center text-sm font-bold text-neon-purple group-hover:translate-x-2 transition-transform cursor-pointer">
+                            View Details <ExternalLink size={14} className="ml-2" />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+};
 
 const PersonalCard = ({ project, index }: { project: any, index: number }) => {
     return (
@@ -193,6 +269,8 @@ const PersonalCard = ({ project, index }: { project: any, index: number }) => {
 };
 
 const Projects = () => {
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
     return (
         <section id="projects" className="py-32 px-6 relative overflow-hidden">
              {/* Background decorative elements for the section */}
@@ -214,15 +292,23 @@ const Projects = () => {
                     </p>
                 </motion.div>
 
-                {/* Company Projects Section */}
+                {/* Company Projects Section - Expandable Cards */}
                 <div className="mb-32">
                     <h3 className="text-2xl font-bold mb-12 flex items-center gap-4 text-white/90">
                         <span className="w-12 h-px bg-neon-blue"></span>
                         Professional Experience
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="flex flex-col lg:flex-row gap-4 w-full">
                         {projects.company.map((project, index) => (
-                            <CompanyCard key={index} project={project} index={index} />
+                            <CompanyCard 
+                                key={index} 
+                                project={project} 
+                                index={index} 
+                                isHovered={hoveredIndex === index}
+                                onHover={() => setHoveredIndex(index)}
+                                onLeave={() => setHoveredIndex(null)}
+                                isAnyHovered={hoveredIndex !== null}
+                            />
                         ))}
                     </div>
                 </div>
