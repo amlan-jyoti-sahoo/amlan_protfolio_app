@@ -24,7 +24,7 @@ const Navbar = ({ onResumeClick }: NavbarProps) => {
         <div className="flex items-center space-x-2">
           <Terminal className="text-neon-blue w-6 h-6" />
           <span className="font-display text-lg font-bold tracking-wider text-white">
-            AMLAN<span className="text-neon-purple">.DEV</span>
+            AMLANJYOTI<span className="text-neon-purple">.DEV</span>
           </span>
         </div>
         

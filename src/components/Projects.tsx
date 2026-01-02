@@ -1,6 +1,6 @@
-import { useRef } from 'react';
-import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ExternalLink, Github, Smartphone, Tablet } from 'lucide-react';
+import TiltCard from './TiltCard';
 
 const projects = {
     company: [
@@ -84,96 +84,60 @@ const CompanyCard = ({ project, index }: { project: any, index: number }) => (
 );
 
 const PersonalCard = ({ project, index }: { project: any, index: number }) => {
-    // 3D Tilt Logic
-    const ref = useRef<HTMLDivElement>(null);
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const xSpring = useSpring(x, { stiffness: 300, damping: 30 });
-    const ySpring = useSpring(y, { stiffness: 300, damping: 30 });
-
-    const transform = useMotionTemplate`perspective(1000px) rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        
-        const rX = (mouseY / height - 0.5) * -20; // Rotate X range: -10 to 10 deg
-        const rY = (mouseX / width - 0.5) * 20;   // Rotate Y range: -10 to 10 deg
-        
-        x.set(rX);
-        y.set(rY);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
     return (
-        <motion.div
-            ref={ref}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ transformStyle: "preserve-3d", transform }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            className="group relative rounded-2xl bg-bg-dark border border-white/5 hover:border-neon-purple/50 transition-colors duration-500"
-        >
-             {/* Continuous Floating / Breathing Animation for the card content */}
-            <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: index * 1.5 }}
-                className="relative h-full flex flex-col"
+        <TiltCard className="group relative rounded-2xl bg-bg-dark border border-white/5 hover:border-neon-purple/50 transition-colors duration-500 h-full">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="h-full"
             >
-                {/* Video Placeholder Area */}
-                <div className="h-48 bg-black/50 relative overflow-hidden rounded-t-2xl group-hover:shadow-[0_0_30px_rgba(188,19,254,0.2)] transition-shadow duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-t from-bg-dark to-transparent z-10" />
-                    
-                    {/* Animated Gradient Placeholder if no video */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/10 via-neon-purple/10 to-neon-pink/10 animate-blob mix-blend-overlay" />
-                    
-                    {/* Preview Badge */}
-                    <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover:translate-y-0">
-                        <span className="px-5 py-2 bg-white/10 backdrop-blur-md rounded-full text-sm font-medium border border-white/20 text-white shadow-lg">View Project</span>
-                    </div>
-                </div>
-
-                <div className="p-6 relative z-10 flex-grow flex flex-col">
-                    <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-neon-blue group-hover:to-neon-purple transition-all duration-300">
-                        {project.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">{project.desc}</p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                        {project.tech.map((t: string) => (
-                            <span key={t} className="px-2 py-1 text-[10px] uppercase tracking-wider font-semibold rounded bg-white/5 text-gray-400 border border-white/5">
-                                {t}
-                            </span>
-                        ))}
+                 {/* Continuous Floating / Breathing Animation for the card content */}
+                <motion.div 
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: index * 1.5 }}
+                    className="relative h-full flex flex-col"
+                >
+                    {/* Video Placeholder Area */}
+                    <div className="h-48 bg-black/50 relative overflow-hidden rounded-t-2xl group-hover:shadow-[0_0_30px_rgba(188,19,254,0.2)] transition-shadow duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-t from-bg-dark to-transparent z-10" />
+                        
+                        {/* Animated Gradient Placeholder if no video */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/10 via-neon-purple/10 to-neon-pink/10 animate-blob mix-blend-overlay" />
+                        
+                        {/* Preview Badge */}
+                        <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover:translate-y-0">
+                            <span className="px-5 py-2 bg-white/10 backdrop-blur-md rounded-full text-sm font-medium border border-white/20 text-white shadow-lg">View Project</span>
+                        </div>
                     </div>
 
-                    <div className="flex gap-4 pt-4 border-t border-white/5">
-                        <a href={project.links.github} className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors">
-                            <Github size={16} /> <span className="text-xs uppercase tracking-widest">Code</span>
-                        </a>
-                        <a href={project.links.demo} className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-neon-pink transition-colors ml-auto">
-                            <ExternalLink size={16} /> <span className="text-xs uppercase tracking-widest">Live Demo</span>
-                        </a>
+                    <div className="p-6 relative z-10 flex-grow flex flex-col">
+                        <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-neon-blue group-hover:to-neon-purple transition-all duration-300">
+                            {project.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">{project.desc}</p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-6 mt-auto">
+                            {project.tech.map((t: string) => (
+                                <span key={t} className="px-2 py-1 text-[10px] uppercase tracking-wider font-semibold rounded bg-white/5 text-gray-400 border border-white/5">
+                                    {t}
+                                </span>
+                            ))}
+                        </div>
+
+                        <div className="flex gap-4 pt-4 border-t border-white/5">
+                            <a href={project.links.github} className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                                <Github size={16} /> <span className="text-xs uppercase tracking-widest">Code</span>
+                            </a>
+                            <a href={project.links.demo} className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-neon-pink transition-colors ml-auto">
+                                <ExternalLink size={16} /> <span className="text-xs uppercase tracking-widest">Live Demo</span>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                </motion.div>
             </motion.div>
-
-            {/* Glowing Border Gradient effect behind */}
-            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-neon-blue/0 via-neon-purple/0 to-neon-pink/0 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-700 group-hover:via-neon-purple/30" />
-        </motion.div>
+        </TiltCard>
     );
 };
 

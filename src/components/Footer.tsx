@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center relative z-10 opacity-70">
             <div className="mb-4 md:mb-0 text-center md:text-left">
                 <p className="text-sm text-gray-400 font-mono">
-                    &copy; {new Date().getFullYear()} Amlan Sahoo. Built with React & Tailwind.
+                    &copy; {new Date().getFullYear()} Amlanjyoti Sahoo. Built with React & Tailwind.
                 </p>
             </div>
             

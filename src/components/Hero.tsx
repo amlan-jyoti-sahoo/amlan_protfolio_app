@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Mail } from 'lucide-react';
+import TiltCard from './TiltCard';
 
 const Hero = () => {
     return (
@@ -21,10 +22,19 @@ const Hero = () => {
                         <span className="text-neon-blue text-sm font-mono tracking-wider"> &lt; Hello World /&gt;</span>
                     </motion.div>
 
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="text-2xl md:text-3xl font-display text-white mb-2"
+                    >
+                        Hi, I'm <span className="text-neon-cyan">Amlanjyoti Sahoo</span>
+                    </motion.h2>
+
                     <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                        Software <br/>
+                        Mobile App <br/>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink">
-                            Engineer
+                            Developer
                         </span>
                     </h1>
                     
@@ -65,36 +75,44 @@ const Hero = () => {
                     className="relative hidden md:block h-[500px]"
                 >
                      {/* Code/Tech decorative elements */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/10 to-neon-purple/10 rounded-2xl glass-panel border border-white/5 p-8 overflow-hidden">
-                         <div className="space-y-4 font-mono text-sm opacity-60">
-                            {[1, 2, 3, 4, 5, 6].map((i) => (
-                                <motion.div 
-                                    key={i}
-                                    initial={{ x: -20, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: 0.5 + (i * 0.1) }}
-                                    className="h-2 bg-gradient-to-r from-neon-blue/20 to-transparent rounded w-3/4"
-                                />
-                            ))}
-                             <motion.div 
-                                animate={{ y: [0, 10, 0] }}
-                                transition={{ repeat: Infinity, duration: 4 }}
-                                className="absolute top-1/4 right-10 w-20 h-20 bg-neon-pink/20 blur-xl rounded-full" 
-                             />
-                         </div>
-                         
-                         {/* Floating badges */}
+                    <TiltCard className="absolute inset-0 bg-gradient-to-br from-neon-blue/10 to-neon-purple/10 rounded-2xl glass-panel border border-white/5 p-8 overflow-hidden group hover:border-neon-purple/50 transition-colors duration-500">
+                         {/* Continuous Floating / Breathing Animation for the inner content */}
                          <motion.div 
-                            animate={{ y: [0, -20, 0] }}
-                            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-                            className="absolute bottom-10 right-10 glass-panel p-4 rounded-xl border border-neon-cyan/30"
+                            animate={{ y: [0, -15, 0] }}
+                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                            className="relative h-full"
                          >
-                             <div className="flex items-center gap-3">
-                                 <div className="w-3 h-3 bg-neon-green rounded-full animate-pulse" />
-                                 <span className="text-neon-cyan font-mono">System Online</span>
+                             <div className="space-y-4 font-mono text-sm opacity-60">
+                                {[1, 2, 3, 4, 5, 6].map((i) => (
+                                    <motion.div 
+                                        key={i}
+                                        initial={{ x: -20, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        transition={{ delay: 0.5 + (i * 0.1) }}
+                                        className="h-2 bg-gradient-to-r from-neon-blue/20 to-transparent rounded w-3/4"
+                                    />
+                                ))}
+                                 <motion.div 
+                                    animate={{ y: [0, 10, 0] }}
+                                    transition={{ repeat: Infinity, duration: 4 }}
+                                    className="absolute top-1/4 right-10 w-20 h-20 bg-neon-pink/20 blur-xl rounded-full" 
+                                 />
                              </div>
+                             
+                             {/* Floating badges */}
+                             <motion.div 
+                                whileHover={{ scale: 1.1 }}
+                                animate={{ y: [0, -20, 0] }}
+                                transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                                className="absolute bottom-10 right-10 glass-panel p-4 rounded-xl border border-neon-cyan/30 shadow-lg shadow-neon-cyan/20"
+                             >
+                                 <div className="flex items-center gap-3">
+                                     <div className="w-3 h-3 bg-neon-green rounded-full animate-pulse" />
+                                     <span className="text-neon-cyan font-mono">System Online</span>
+                                 </div>
+                             </motion.div>
                          </motion.div>
-                    </div>
+                    </TiltCard>
                 </motion.div>
             </div>
         </section>

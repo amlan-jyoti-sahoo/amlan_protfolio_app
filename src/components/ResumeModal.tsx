@@ -31,7 +31,7 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
                         <div className="flex justify-between items-center p-4 border-b border-white/10 bg-bg-dark z-10">
                             <div className="flex items-center gap-2 text-white font-medium">
                                 <FileText className="w-5 h-5 text-neon-blue" />
-                                <span>Amlan_Sahoo_Resume.pdf</span>
+                                <span>Amlanjyoti_Sahoo_Resume.pdf</span>
                             </div>
                             <div className="flex items-center gap-4">
                                 <a 
