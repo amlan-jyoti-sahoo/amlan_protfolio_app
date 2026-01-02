@@ -9,7 +9,7 @@ const About = () => {
     ];
 
     const skills = [
-        "React Native", "TypeScript", "React", "Android Development", "Kotlin", "Flutter", "Dart", "Ios Development","Swift-UI", "Node.js", "AWS", "Firebase", "GitHub", "Git", 
+        "React Native", "TypeScript", "Javascript", "React", "Redux", "Android Development", "Kotlin", "Flutter", "Dart", "Ios Development","Swift-UI", "Node.js", "AWS", "Firebase", "GitHub", "Git", "Bitbucket", "Android Studio", "Xcode", "Visual Studio", "Java", 
     ];
 
     return (
