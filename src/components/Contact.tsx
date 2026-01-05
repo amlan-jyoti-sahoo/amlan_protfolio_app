@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mail, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, Mail, Loader2, CheckCircle, AlertCircle, Phone } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
@@ -15,12 +15,38 @@ const Contact = () => {
         setIsLoading(true);
         setStatus(null);
 
+        // Get form data
+        const formData = new FormData(form.current);
+        const userName = formData.get('user_name') as string;
+        const userEmail = formData.get('user_email') as string;
+        const mobile = formData.get('mobile') as string;
+        const originalMessage = formData.get('message') as string;
+
+        // Construct the full message with details prepended
+        const fullMessage = `
+--- Contact Details ---
+Name: ${userName}
+Email: ${userEmail}
+Mobile: ${mobile || 'Not provided'}
+---------------------
+
+Message:
+${originalMessage}
+        `.trim();
+
+        // Prepare template parameters
+        const templateParams = {
+            user_name: userName,
+            user_email: userEmail,
+            message: fullMessage,
+        };
+
         // These should be in your .env file
         const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id_placeholder';
         const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id_placeholder';
         const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key_placeholder';
 
-        emailjs.sendForm(serviceId, templateId, form.current, publicKey)
+        emailjs.send(serviceId, templateId, templateParams, publicKey)
             .then(() => {
                 setStatus('success');
                 form.current?.reset();
@@ -54,25 +80,39 @@ const Contact = () => {
                     </div>
 
                     <form ref={form} onSubmit={sendEmail} className="space-y-6 relative z-10">
-                        <div className="space-y-2">
-                            <label className="text-xs text-neon-blue font-mono uppercase">Name</label>
-                            <input 
-                                type="text" 
-                                name="user_name"
-                                required
-                                className="w-full bg-black/40 border border-white/10 rounded-lg text-white p-3 focus:outline-none focus:border-neon-blue transition-colors font-mono placeholder-white/20"
-                                placeholder="John Doe"
-                            />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-xs text-neon-blue font-mono uppercase">Name</label>
+                                <input 
+                                    type="text" 
+                                    name="user_name"
+                                    required
+                                    className="w-full bg-black/40 border border-white/10 rounded-lg text-white p-3 focus:outline-none focus:border-neon-blue transition-colors font-mono placeholder-white/20"
+                                    placeholder="John Doe"
+                                />
+                            </div>
+                            
+                            <div className="space-y-2">
+                                <label className="text-xs text-neon-purple font-mono uppercase">Email</label>
+                                <input 
+                                    type="email" 
+                                    name="user_email"
+                                    required
+                                    className="w-full bg-black/40 border border-white/10 rounded-lg text-white p-3 focus:outline-none focus:border-neon-purple transition-colors font-mono placeholder-white/20"
+                                    placeholder="john@example.com"
+                                />
+                            </div>
                         </div>
-                        
+
                         <div className="space-y-2">
-                            <label className="text-xs text-neon-purple font-mono uppercase">Email</label>
+                            <label className="text-xs text-neon-cyan font-mono uppercase flex items-center gap-2">
+                                <Phone size={12} /> Mobile Number <span className="text-gray-500 normal-case">(Optional)</span>
+                            </label>
                             <input 
-                                type="email" 
-                                name="user_email"
-                                required
-                                className="w-full bg-black/40 border border-white/10 rounded-lg text-white p-3 focus:outline-none focus:border-neon-purple transition-colors font-mono placeholder-white/20"
-                                placeholder="john@example.com"
+                                type="tel" 
+                                name="mobile"
+                                className="w-full bg-black/40 border border-white/10 rounded-lg text-white p-3 focus:outline-none focus:border-neon-cyan transition-colors font-mono placeholder-white/20"
+                                placeholder="+1 234 567 890"
                             />
                         </div>
 
