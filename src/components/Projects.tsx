@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Cloud, Globe } from 'lucide-react';
+import { ExternalLink, Cloud, Globe, Github } from 'lucide-react';
 import ProjectModal from './ProjectModal';
 import indiStep1 from '../assets/videos/indi-step-1.mp4';
 import indiStep2 from '../assets/videos/indi-step-2.mp4';
@@ -266,9 +266,9 @@ const CompanyCard = ({
 
 const PersonalProjectShowcase = () => {
     const steps = [
-        { video: indiStep1, label: "Step 1: Identity" },
-        { video: indiStep2, label: "Step 2: Verification" },
-        { video: indiStep3, label: "Step 3: Approval" }
+        { video: indiStep1, label: "Immersive UI" },
+        { video: indiStep2, label: "E-Commerce Core" },
+        { video: indiStep3, label: "Video-First Experience" }
     ];
 
     return (
@@ -278,19 +278,13 @@ const PersonalProjectShowcase = () => {
                 <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
                     {steps.map((step, index) => (
                         <div key={index} className="relative rounded-xl overflow-hidden shadow-2xl bg-black/50 border border-white/5 group-hover:shadow-neon-purple/20 transition-all duration-500">
-                             {/* Number Badge */}
-                             <div className="absolute top-3 left-3 z-10">
-                                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-neon-purple/20 backdrop-blur-md border border-neon-purple/50 text-white font-bold text-sm shadow-[0_0_10px_rgba(188,19,254,0.3)]">
-                                    {index + 1}
-                                </span>
-                            </div>
-                            
                             <video 
                                 src={step.video} 
                                 autoPlay 
                                 loop 
                                 muted 
-                                playsInline 
+                                playsInline
+                                controls={false}
                                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 min-h-[300px]"
                             />
                             
@@ -310,32 +304,31 @@ const PersonalProjectShowcase = () => {
                             </span>
                         </div>
                         <h3 className="text-3xl font-bold text-white mb-4 leading-tight">
-                            Identity <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-pink">Verification Flow</span>
+                            Indi-Step <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-pink">App</span>
                         </h3>
-                        <p className="text-gray-400 leading-relaxed">
-                            A seamless, three-step identity verification process designed for high-conversion user onboarding. 
-                            This flow integrates real-time video capture, liveness detection, and document scanning into a unified, 
-                            user-friendly interface.
+                        <p className="text-gray-400 leading-relaxed text-sm">
+                            A premier mobile e-commerce platform bridging traditional Indian footwear artisans with the global market. 
+                            Built with a "mobile-first" philosophy, it combines cultural storytelling with modern retail convenience.
                         </p>
                     </div>
 
                     <div className="space-y-4">
                         <div className="flex items-start gap-3">
                             <div className="mt-1 w-1.5 h-1.5 rounded-full bg-neon-purple shadow-[0_0_10px_rgba(188,19,254,0.8)]" />
-                            <p className="text-sm text-gray-300"><span className="text-white font-semibold">Step 1:</span> User captures initial identity reference.</p>
+                            <p className="text-sm text-gray-300"><span className="text-white font-semibold">Immersive UI:</span> "Ken Burns" animations & draggable video loops.</p>
                         </div>
                         <div className="flex items-start gap-3">
                             <div className="mt-1 w-1.5 h-1.5 rounded-full bg-neon-purple shadow-[0_0_10px_rgba(188,19,254,0.8)]" />
-                            <p className="text-sm text-gray-300"><span className="text-white font-semibold">Step 2:</span> Automated processing and validation.</p>
+                            <p className="text-sm text-gray-300"><span className="text-white font-semibold">Robust Core:</span> Secure checkout, Redux state, & persistent wishlists.</p>
                         </div>
                         <div className="flex items-start gap-3">
                             <div className="mt-1 w-1.5 h-1.5 rounded-full bg-neon-purple shadow-[0_0_10px_rgba(188,19,254,0.8)]" />
-                            <p className="text-sm text-gray-300"><span className="text-white font-semibold">Step 3:</span> Final confirmation and approval.</p>
+                            <p className="text-sm text-gray-300"><span className="text-white font-semibold">Performance:</span> Optimized FlashLists & Reanimated worklets.</p>
                         </div>
                     </div>
 
                     <div className="flex flex-wrap gap-2 pt-4 border-t border-white/5">
-                        {["React Native", "VisionCamera", "TensorFlow", "Reanimated"].map((tech) => (
+                        {["React Native", "Expo", "TypeScript", "Redux Toolkit", "Reanimated"].map((tech) => (
                             <span key={tech} className="px-2 py-1 text-[10px] uppercase tracking-wider font-semibold rounded bg-white/5 text-gray-400 border border-white/5">
                                 {tech}
                             </span>
@@ -343,9 +336,15 @@ const PersonalProjectShowcase = () => {
                     </div>
 
                     <div className="pt-2">
-                         <button className="flex items-center gap-2 text-white hover:text-neon-purple transition-colors font-semibold group/btn">
-                            View Case Study <ExternalLink size={16} className="group-hover/btn:translate-x-1 transition-transform"/>
-                        </button>
+                         <a 
+                            href="https://github.com/amlan-jyoti-sahoo/Indi-Step" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-neon-purple/50 text-white transition-all font-semibold group/btn w-max"
+                         >
+                            <Github size={20} className="group-hover/btn:scale-110 transition-transform"/> 
+                            <span>Code</span>
+                        </a>
                     </div>
                 </div>
             </div>
