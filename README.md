@@ -7,7 +7,7 @@ https://amlan-jyoti-sahoo.github.io/portfolio/
 
 <div align="center">
   <a href="https://amlan-jyoti-sahoo.github.io/portfolio/">
-    <img src="public/preview.png" alt="Portfolio Preview" width="100%" style="border-radius: 10px; border: 2px solid #333;" />
+    <img src="public/preview.jpg" alt="Portfolio Preview" width="100%" style="border-radius: 10px; border: 2px solid #333;" />
   </a>
 </div>
 
