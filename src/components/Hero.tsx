@@ -121,7 +121,7 @@ const Hero = () => {
                                  {/* Image Itself */}
                                  <div className="relative w-[320px] h-[320px] rounded-full overflow-hidden border-4 border-black/80 shadow-2xl shadow-neon-blue/30 group-hover:scale-[1.02] transition-transform duration-500">
                                      <img 
-                                        src={`${import.meta.env.BASE_URL}profile.jpg`} 
+                                        src={`${import.meta.env.BASE_URL}profile.png`} 
                                         alt="Amlanjyoti Sahoo" 
                                         className="w-full h-full object-cover"
                                      />

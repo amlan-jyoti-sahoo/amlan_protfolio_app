@@ -13,6 +13,8 @@ export default {
         'neon-cyan': '#0afff0',
         'neon-green': '#0aff0a',
         'neon-pink': '#ff0055',
+        'neon-red': '#ff3131',
+        'neon-yellow': '#fff01f',
       },
       animation: {
         'spin-slow': 'spin 12s linear infinite',

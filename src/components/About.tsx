@@ -1,108 +1,128 @@
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const About = () => {
     const stats = [
-        { label: "Years Experience", value: "3+", color: "text-neon-blue" },
-        { label: "Projects Completed", value: "15+", color: "text-neon-purple" },
-        { label: "Technologies", value: "20+", color: "text-neon-pink" },
-        { label: "Coffee Consumed", value: "∞", color: "text-neon-green" },
+        { label: "Years Exp", value: "3+", color: "text-neon-blue" },
+        { label: "Projects", value: "15+", color: "text-neon-purple" },
+        { label: "Tech Stack", value: "20+", color: "text-neon-pink" },
+        { label: "Coffee", value: "∞", color: "text-neon-green" },
     ];
 
-    const skills = [
-        "React Native", "TypeScript", "Javascript", "React", "Redux", "Android Development", "Kotlin", "Flutter", "Dart", "Ios Development","Swift-UI", "Node.js", "AWS", "Firebase", "GitHub", "Git", "Bitbucket", "Android Studio", "Xcode", "Visual Studio", "Java", 
+    const coreSkills = [
+        { name: "React Native", level: 95, color: "bg-neon-cyan" },
+        { name: "Redux", level: 90, color: "bg-neon-cyan" },
+        { name: "TypeScript", level: 90, color: "bg-neon-cyan" },
+        { name: "JavaScript", level: 92, color: "bg-neon-cyan" },
+        { name: "Java", level: 80, color: "bg-neon-cyan" },
+        { name: "Flutter", level: 75, color: "bg-neon-cyan" },
+        { name: "Kotlin", level: 60, color: "bg-neon-cyan" },
     ];
+
+    const otherSkills = useMemo(() => ({
+        "Frameworks": ["React Native", "Redux", "Zustand", "Re.Pack", "Flutter"],
+        "Languages": ["TypeScript", "JavaScript", "Java", "Kotlin", "Dart"],
+        "Core Concepts": ["Hooks", "REST APIs", "State Management", "Performance Optimization", "Debugging","Playstore/Appstore Deployment", ],
+        "Libraries": ["Reanimated", "FlashList", "Juspay", "DigiLocker", "OCR", "Firebase"],
+        "Tools": ["Git", "BitBucket", "Android Studio", "Xcode", "CodePush", "Jest", ],
+        "Cloud": ["AWS (EC2, S3, IAM)"]
+    }), []);
 
     return (
-        <section id="about" className="py-20 px-6 relative overflow-hidden">
-            <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-                
-                {/* Left Column: Creative/Interactive Visual */}
-                <div className="relative">
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8 }}
-                        className="relative z-10 glass-panel p-8 rounded-2xl border border-white/10"
-                    >
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="w-3 h-3 rounded-full bg-red-500" />
-                            <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                            <div className="w-3 h-3 rounded-full bg-green-500" />
-                            <div className="h-px flex-1 bg-white/10" />
-                        </div>
+        <section id="about" className="py-12 px-6 relative overflow-visible">
+            <div className="max-w-7xl mx-auto">
+                <div className="glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden">
+                    {/* Background Glow */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-neon-purple/10 blur-[100px] rounded-full pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-neon-blue/10 blur-[100px] rounded-full pointer-events-none" />
+
+                    <div className="grid lg:grid-cols-2 gap-12 relative z-10">
                         
-                        <div className="font-mono text-sm space-y-4 text-gray-300">
+                        {/* Left Column: Bio & Core Skills */}
+                        <div className="flex flex-col gap-8">
                             <div>
-                                <span className="text-neon-purple">const</span> <span className="text-neon-blue">developer</span> = <span className="text-white">{"{"}</span>
+                                <motion.h2 
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    className="text-3xl font-bold mb-4"
+                                >
+                                    Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-purple">Architect</span>
+                                </motion.h2>
+
+                                <motion.p 
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.2 }}
+                                    className="text-gray-400 text-sm leading-relaxed mb-6"
+                                >
+
+                                    I'm not just a coder; I'm a digital architect. With a deep passion for clean architecture and pixel-perfect design, I bridge the gap between complex backend logic and beautiful frontend experiences.
+                                    My mission is simple: to build software that is not only functional but also delightful to use.
+                                </motion.p>
+
+                                {/* Compact Stats */}
+                                <div className="flex gap-4 mb-8">
+                                    {stats.map((stat, i) => (
+                                        <div key={i} className="text-center">
+                                            <div className={`text-3xl font-bold ${stat.color}`}>{stat.value}</div>
+                                            <div className="text-xs text-gray-500 uppercase">{stat.label}</div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="pl-4">
-                                <div>name: <span className="text-neon-green">'Amlanjyoti Sahoo'</span>,</div>
-                                <div>role: <span className="text-neon-green">'Software Engineer'</span>,</div>
-                                <div>passion: [<span className="text-neon-green">'Clean UI'</span>, <span className="text-neon-green">'Performance'</span>],</div>
-                                <div>status: <span className="text-neon-blue">BUILDING_THE_FUTURE</span></div>
+
+                            {/* Core Skills Progress Bars */}
+                            <div className="space-y-4">
+                                <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">Core Proficiency</h3>
+                                {coreSkills.map((skill, index) => (
+                                    <div key={skill.name} className="space-y-1">
+                                        <div className="flex justify-between text-xs">
+                                            <span className="text-gray-300">{skill.name}</span>
+                                            <span className="text-gray-400">{skill.level}/100</span>
+                                        </div>
+                                        <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: `${skill.level}%` }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1, delay: 0.2 + (index * 0.1) }}
+                                                className={`h-full ${skill.color} shadow-[0_0_8px_currentColor]`}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                            <div><span className="text-white">{"}"}</span>;</div>
                         </div>
 
-                        {/* Floating Morphing blobs behind */}
-                        <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-30 blur-3xl rounded-full bg-gradient-to-r from-neon-blue/40 to-neon-purple/40 animate-blob" />
-                    </motion.div>
-                </div>
-
-                {/* Right Column: Content */}
-                <div>
-                    <motion.h2 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-4xl font-bold mb-6"
-                    >
-                        Crafting Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-purple">Masterpieces</span>
-                    </motion.h2>
-
-                    <motion.p 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-gray-400 text-lg leading-relaxed mb-8"
-                    >
-                        I'm not just a coder; I'm a digital architect. With a deep passion for clean architecture and pixel-perfect design, I bridge the gap between complex backend logic and beautiful frontend experiences.
-                        <br /><br />
-                        My mission is simple: to build software that is not only functional but also delightful to use.
-                    </motion.p>
-
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 gap-4 mb-8">
-                        {stats.map((stat, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.3 + (i * 0.1) }}
-                                className="glass-panel p-4 rounded-xl text-center"
-                            >
-                                <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
-                                <div className="text-xs text-gray-500 uppercase tracking-wider">{stat.label}</div>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Skills Tags */}
-                    <div className="flex flex-wrap gap-2">
-                        {skills.map((skill, i) => (
-                            <motion.span
-                                key={i}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.5 + (i * 0.05) }}
-                                className="px-3 py-1 glass-panel rounded-full text-sm text-neon-cyan border border-neon-cyan/20 hover:bg-neon-cyan/10 transition-colors cursor-default"
-                            >
-                                {skill}
-                            </motion.span>
-                        ))}
+                        {/* Right Column: Other Skills (Compact Grid) */}
+                        <div className="bg-white/5 rounded-2xl p-6 border border-white/5">
+                            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-6">Technical Arsenal</h3>
+                            <div className="space-y-6">
+                                {Object.entries(otherSkills).map(([category, skills], index) => (
+                                    <motion.div 
+                                        key={category}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: 0.4 + (index * 0.1) }}
+                                    >
+                                        <div className="text-xs text-neon-cyan/80 mb-2 font-mono">{category}</div>
+                                        <div className="flex flex-wrap gap-2">
+                                            {skills.map((skill) => (
+                                                <span 
+                                                    key={skill}
+                                                    className="text-xs text-white bg-white/10 px-2 py-1 rounded border border-white/10 hover:border-white/20 hover:bg-white/20 transition-colors cursor-default"
+                                                >
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
